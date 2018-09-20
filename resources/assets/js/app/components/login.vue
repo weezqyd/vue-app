@@ -19,6 +19,9 @@
                             <!-- jQuery Validation (.js-validation-signin class is initialized in js/pages/op_auth_signin.min.js which was auto compiled from _es6/pages/op_auth_signin.js) -->
                             <!-- For more info and examples you can check out https://github.com/jzaefferer/jquery-validation -->
                             <form @submit.prevent="attemptLogin" class="js-validation-signin" action="/login" method="post" novalidate="novalidate">
+                                <ul v-if="errors" v-for=" error in errors" class="alert alert-danger">
+                                    <li>{{error}}</li>
+                                </ul>
                                 <div class="form-group">
                                     <input type="email" class="form-control form-control-alt" v-model="email"  placeholder="Email">
                                 </div>

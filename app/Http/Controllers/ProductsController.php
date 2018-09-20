@@ -10,7 +10,6 @@ use Prettus\Validator\Exceptions\ValidatorException;
 use App\Http\Requests\ProductsCreateRequest;
 use App\Http\Requests\ProductsUpdateRequest;
 use App\Repositories\ProductsRepository;
-use App\Validators\ProductsValidator;
 
 /**
  * Class ProductsController.
@@ -35,7 +34,7 @@ class ProductsController extends Controller
      * @param ProductsRepository $repository
      * @param ProductsValidator $validator
      */
-    public function __construct(ProductsRepository $repository, ProductsValidator $validator)
+    public function __construct(ProductsRepository $repository)
     {
         $this->repository = $repository;
         $this->validator  = $validator;

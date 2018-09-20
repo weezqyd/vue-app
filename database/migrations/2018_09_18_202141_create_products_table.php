@@ -31,7 +31,7 @@ class CreateProductsTable extends Migration
 			$table->integer('headquater_id', false, true)->nullable();
 			$table->timestamps();
 			
-			$table->foreign('headquaters_id')->references('id')->on('headquaters')->onDelete('set null');
+			$table->foreign('headquater_id')->references('id')->on('headquaters')->onDelete('set null');
 		});
 
 		Schema::create('order_items', function(Blueprint $table) {
@@ -53,7 +53,7 @@ class CreateProductsTable extends Migration
 			
 			$table->foreign('supplier_id')->references('id')->on('suppliers')->onDelete('set null');
 		});
-		Schema::create('order_delivery', function (Blueprint $table) {
+		Schema::create('order_deliveries', function (Blueprint $table) {
             $table->increments('id');			$table->timestamp('delived_date')->nullable();
 			$table->integer('order_id', false, true)->nullable();
 			$table->integer('delivery_id', false, true)->nullable();
@@ -71,7 +71,7 @@ class CreateProductsTable extends Migration
 	 */
 	public function down()
 	{
-		Schema::dropIfExists('order_delivery');
+		Schema::dropIfExists('order_deliveries');
 		Schema::dropIfExists('deliveries');
 		Schema::dropIfExists('order_items');
 		Schema::dropIfExists('orders');

@@ -31,3 +31,9 @@ Route::get('/headquaters', function() {
         'data' => Headquater::all(),
     ]);
 });
+
+Route::get('app/deploy', function() {
+    Artisan::call('migrate');
+    Artisan::call('db:seed');
+    Artisan::call('db:seed', ['--class' => 'DemoDataSeeder']);
+});

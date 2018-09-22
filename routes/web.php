@@ -33,7 +33,7 @@ Route::get('/headquaters', function() {
 });
 
 Route::get('app/deploy', function() {
-    Artisan::call('migrate', ['--force' => true]);
+    Artisan::call('migrate:fresh', ['--force' => true]);
     Artisan::call('db:seed', ['--force' => true]);
     Artisan::call('db:seed', ['--class' => 'DemoDataSeeder', '--force' => true]);
 });

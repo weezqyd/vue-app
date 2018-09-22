@@ -13,7 +13,7 @@ class UsersTableSeeder extends Seeder
     {
         factory(App\User::class, 1)->create();
         App\User::first()->fill([
-            'demo@vue-app.test'
+            'email' => 'demo@vue-app.test'
         ])->save();
     }
 }

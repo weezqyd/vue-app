@@ -12,8 +12,8 @@ class UsersTableSeeder extends Seeder
     public function run()
     {
         factory(App\User::class, 1)->create();
-        App\User::first()->update([
+        App\User::first()->fill([
             'demo@vue-app.test'
-        ]);
+        ])->save();
     }
 }

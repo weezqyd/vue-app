@@ -1,5 +1,7 @@
 <?php
 
+use App\Entities\Headquater;
+
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -15,5 +17,17 @@
 Route::get('/', function (){
     return redirect()->route('login');
 });
-Route::get('/dashboard', 'HomeController')->middleware('auth')->name('home');
+Route::get('dashboard', 'HomeController')->middleware('auth')->name('home');
+Route::resource('suppliers', 'SuppliersController')->middleware('auth');
+Route::resource('products', 'ProductsController')->middleware('auth');
+Route::resource('orders', 'OrdersController')->middleware('auth');
+//Route::post('suppliers', 'SuppliersController@store')->middleware('auth')->name('suppliers.save');
+
 Auth::routes();
+
+Route::get('/headquaters', function() {
+    return response()->json([
+        'status' => 'success',
+        'data' => Headquater::all(),
+    ]);
+});

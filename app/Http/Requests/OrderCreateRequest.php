@@ -13,7 +13,7 @@ class OrderCreateRequest extends FormRequest
      */
     public function authorize()
     {
-        return false;
+        return true;
     }
 
     /**
@@ -24,7 +24,8 @@ class OrderCreateRequest extends FormRequest
     public function rules()
     {
         return [
-            //
+            'order_code' => 'required|unique:orders',
+            'headquater_id' => 'required|exists:headquaters,id'
         ];
     }
 }

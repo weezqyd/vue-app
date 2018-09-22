@@ -101,6 +101,17 @@ class OrdersController extends Controller
     }
 
     /**
+     * Show the form for creating a new order.
+     *
+     * @return \Illuminate\Http\Response
+     */
+    public function create()
+    {
+
+        return view('orders.create');
+    }
+
+    /**
      * Show the form for editing the specified resource.
      *
      * @param  int $id

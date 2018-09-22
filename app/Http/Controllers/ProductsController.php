@@ -9,7 +9,7 @@ use Prettus\Validator\Contracts\ValidatorInterface;
 use Prettus\Validator\Exceptions\ValidatorException;
 use App\Http\Requests\ProductsCreateRequest;
 use App\Http\Requests\ProductsUpdateRequest;
-use App\Repositories\ProductsRepository;
+use App\Repositories\ProductRepository;
 
 /**
  * Class ProductsController.
@@ -24,20 +24,19 @@ class ProductsController extends Controller
     protected $repository;
 
     /**
-     * @var ProductsValidator
-     */
-    protected $validator;
-
-    /**
      * ProductsController constructor.
      *
      * @param ProductsRepository $repository
      * @param ProductsValidator $validator
      */
-    public function __construct(ProductsRepository $repository)
+    public function __construct(ProductRepository $repository)
     {
         $this->repository = $repository;
-        $this->validator  = $validator;
+    }
+
+    public function create()
+    {
+        return view('products.create');
     }
 
     /**
@@ -71,9 +70,6 @@ class ProductsController extends Controller
      */
     public function store(ProductsCreateRequest $request)
     {
-        try {
-
-            $this->validator->with($request->all())->passesOrFail(ValidatorInterface::RULE_CREATE);
 
             $product = $this->repository->create($request->all());
 
@@ -88,16 +84,6 @@ class ProductsController extends Controller
             }
 
             return redirect()->back()->with('message', $response['message']);
-        } catch (ValidatorException $e) {
-            if ($request->wantsJson()) {
-                return response()->json([
-                    'error'   => true,
-                    'message' => $e->getMessageBag()
-                ]);
-            }
-
-            return redirect()->back()->withErrors($e->getMessageBag())->withInput();
-        }
     }
 
     /**
@@ -147,11 +133,7 @@ class ProductsController extends Controller
      */
     public function update(ProductsUpdateRequest $request, $id)
     {
-        try {
-
-            $this->validator->with($request->all())->passesOrFail(ValidatorInterface::RULE_UPDATE);
-
-            $product = $this->repository->update($request->all(), $id);
+            $product = $this->repository->update($request->validated(), $id);
 
             $response = [
                 'message' => 'Products updated.',
@@ -164,18 +146,6 @@ class ProductsController extends Controller
             }
 
             return redirect()->back()->with('message', $response['message']);
-        } catch (ValidatorException $e) {
-
-            if ($request->wantsJson()) {
-
-                return response()->json([
-                    'error'   => true,
-                    'message' => $e->getMessageBag()
-                ]);
-            }
-
-            return redirect()->back()->withErrors($e->getMessageBag())->withInput();
-        }
     }
 
 

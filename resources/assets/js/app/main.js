@@ -18,7 +18,17 @@ window.Vue = require('vue');
 Vue.component('login', require('./components/login.vue'));
 Vue.component('page-footer', require('./components/page-footer.vue'));
 Vue.component('user-dropdown', require('./components/user-dropdown.vue'));
-
+Vue.component('page-header', require('./components/page-header.vue'));
+Vue.component('supplier-form', require('./components/supplier-form.vue'));
+Vue.component('product-form', require('./products/CreateProduct.vue'));
+Vue.component('supplier-list', require('./components/supplier-list.vue'));
+Vue.component('product-list', require('./products/product-list.vue'));
+Vue.component('edit-product', require('./products/edit-product.vue'));
+Vue.component('edit-supplier', require('./components/edit-supplier.vue'));
+Vue.component('order-form', require('./orders/new-order.vue'));
+Vue.component('order-list', require('./orders/order-list.vue'));
+Vue.component('hq-orders', require('./components/hq-orders.vue'));
+Vue.component('orders-tile', require('./components/orders-tile.vue'));
 const app = new Vue({
     el: '#page-container'
 });

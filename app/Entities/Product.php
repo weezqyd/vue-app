@@ -16,6 +16,8 @@ class Product extends Model implements Transformable
 {
     use TransformableTrait;
 
+    protected $appends = ['supplier_name'];
+
     /**
      * The attributes that are mass assignable.
      *
@@ -31,6 +33,15 @@ class Product extends Model implements Transformable
     public function supplier() : BelongsTo
     {
         return $this->belongsTo(Supplier::class);
+    }
+    /**
+     * Mutate the supplier name attribute
+     *
+     * @return string
+     */
+    protected function getSupplierNameAttribute() 
+    {
+        return $this->supplier ?  $this->supplier->name : 'Not Specified';
     }
 
 }

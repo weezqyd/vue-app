@@ -25,20 +25,13 @@ class SuppliersController extends Controller
     protected $repository;
 
     /**
-     * @var SupplierValidator
-     */
-    protected $validator;
-
-    /**
      * SuppliersController constructor.
      *
      * @param SupplierRepository $repository
-     * @param SupplierValidator $validator
      */
-    public function __construct(SupplierRepository $repository, SupplierValidator $validator)
+    public function __construct(SupplierRepository $repository)
     {
         $this->repository = $repository;
-        $this->validator  = $validator;
     }
 
     /**
@@ -72,33 +65,21 @@ class SuppliersController extends Controller
      */
     public function store(SupplierCreateRequest $request)
     {
-        try {
-
-            $this->validator->with($request->all())->passesOrFail(ValidatorInterface::RULE_CREATE);
-
-            $supplier = $this->repository->create($request->all());
-
+            $supplier = $this->repository->create($request->validated());
             $response = [
                 'message' => 'Supplier created.',
                 'data'    => $supplier->toArray(),
             ];
-
             if ($request->wantsJson()) {
-
                 return response()->json($response);
             }
 
             return redirect()->back()->with('message', $response['message']);
-        } catch (ValidatorException $e) {
-            if ($request->wantsJson()) {
-                return response()->json([
-                    'error'   => true,
-                    'message' => $e->getMessageBag()
-                ]);
-            }
+    }
 
-            return redirect()->back()->withErrors($e->getMessageBag())->withInput();
-        }
+    public function create()
+    {
+        return view('suppliers.create');
     }
 
     /**
@@ -148,11 +129,7 @@ class SuppliersController extends Controller
      */
     public function update(SupplierUpdateRequest $request, $id)
     {
-        try {
-
-            $this->validator->with($request->all())->passesOrFail(ValidatorInterface::RULE_UPDATE);
-
-            $supplier = $this->repository->update($request->all(), $id);
+            $supplier = $this->repository->update($request->validated(), $id);
 
             $response = [
                 'message' => 'Supplier updated.',
@@ -165,18 +142,6 @@ class SuppliersController extends Controller
             }
 
             return redirect()->back()->with('message', $response['message']);
-        } catch (ValidatorException $e) {
-
-            if ($request->wantsJson()) {
-
-                return response()->json([
-                    'error'   => true,
-                    'message' => $e->getMessageBag()
-                ]);
-            }
-
-            return redirect()->back()->withErrors($e->getMessageBag())->withInput();
-        }
     }
 
 

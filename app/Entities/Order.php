@@ -13,6 +13,9 @@ use Prettus\Repository\Traits\TransformableTrait;
  */
 class Order extends Model implements Transformable
 {
+
+    protected $appends = ['hq'];
+
     use TransformableTrait;
 
     /**
@@ -21,5 +24,15 @@ class Order extends Model implements Transformable
      * @var array
      */
     protected $fillable = ['order_code', 'headquater_id'];
+
+    public function headquater()
+    {
+        return $this->belongsTo(Headquater::class);
+    }
+
+    public function getHqAttribute()
+    {
+        return $this->headquater ? $this->headquater->name : 'Not Set';
+    }
 
 }

@@ -37,3 +37,7 @@ Route::get('app/deploy', function() {
     Artisan::call('db:seed', ['--force' => true]);
     Artisan::call('db:seed', ['--class' => 'DemoDataSeeder', '--force' => true]);
 });
+
+Route::get('debug', function() {
+    return config('database');
+});
